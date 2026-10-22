@@ -3,17 +3,22 @@ import { KATEGORI, hitungRingkasan, useTransaksi, type DataTransaksi, type Trans
 
 useHead({ title: 'Transaksi · Duitku Rapi Lho' })
 
-const { terurut, tambah, ubah, hapus } = useTransaksi()
+const { terurut, memuat, tambah, ubah, hapus } = useTransaksi()
 
 // --- Form tambah / edit ---
 const sedangDiedit = ref<Transaksi | null>(null)
 
-function simpan(data: DataTransaksi) {
-  if (sedangDiedit.value) {
-    ubah(sedangDiedit.value.id, data)
-    sedangDiedit.value = null
-  } else {
-    tambah(data)
+async function simpan(data: DataTransaksi) {
+  try {
+    if (sedangDiedit.value) {
+      await ubah(sedangDiedit.value.id, data)
+      sedangDiedit.value = null
+    } else {
+      await tambah(data)
+    }
+  } catch (e) {
+    console.error(e)
+    alert('Gagal menyimpan transaksi. Coba lagi ya.')
   }
 }
 
@@ -22,10 +27,14 @@ function mulaiEdit(t: Transaksi) {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-function konfirmasiHapus(t: Transaksi) {
-  if (confirm(`Hapus transaksi "${t.catatan || t.kategori}"?`)) {
-    hapus(t.id)
+async function konfirmasiHapus(t: Transaksi) {
+  if (!confirm(`Hapus transaksi "${t.catatan || t.kategori}"?`)) return
+  try {
+    await hapus(t.id)
     if (sedangDiedit.value?.id === t.id) sedangDiedit.value = null
+  } catch (e) {
+    console.error(e)
+    alert('Gagal menghapus transaksi. Coba lagi ya.')
   }
 }
 
@@ -124,7 +133,8 @@ async function export_() {
         <span>Selisih <strong>{{ formatRupiah(ringkasan.saldo) }}</strong></span>
       </div>
 
-      <p v-if="hasilFilter.length === 0" class="kosong">Tidak ada transaksi yang cocok.</p>
+      <p v-if="memuat" class="kosong">Memuat data…</p>
+      <p v-else-if="hasilFilter.length === 0" class="kosong">Tidak ada transaksi yang cocok.</p>
       <ul v-else class="daftar">
         <TransaksiItem
           v-for="t in hasilFilter"

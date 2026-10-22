@@ -3,11 +3,20 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  // Data disimpan di localStorage (hanya ada di browser),
+  // Data disimpan di localStorage / Supabase langsung dari browser,
   // jadi aplikasi dijalankan sebagai SPA tanpa server-side rendering.
   ssr: false,
 
   css: ['~/assets/css/main.css'],
+
+  runtimeConfig: {
+    public: {
+      // Diisi dari env NUXT_PUBLIC_SUPABASE_URL dan NUXT_PUBLIC_SUPABASE_KEY.
+      // Kalau kosong, aplikasi tetap jalan dalam mode lokal (tanpa login).
+      supabaseUrl: '',
+      supabaseKey: '',
+    },
+  },
 
   app: {
     head: {

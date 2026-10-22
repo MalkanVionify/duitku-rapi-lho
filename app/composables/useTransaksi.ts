@@ -17,8 +17,9 @@ export const KATEGORI: Record<JenisTransaksi, string[]> = {
 }
 
 const KUNCI_STORAGE = 'duitku-rapi-lho:transaksi'
+const KOLOM = 'id, jenis, nominal, kategori, tanggal, catatan'
 
-function muatDariStorage(): Transaksi[] {
+function muatLokal(): Transaksi[] {
   try {
     const isi = localStorage.getItem(KUNCI_STORAGE)
     return isi ? JSON.parse(isi) : []
@@ -27,29 +28,82 @@ function muatDariStorage(): Transaksi[] {
   }
 }
 
+function simpanLokal(list: Transaksi[]) {
+  if (list.length) localStorage.setItem(KUNCI_STORAGE, JSON.stringify(list))
+  else localStorage.removeItem(KUNCI_STORAGE)
+}
+
+// Sumber data otomatis dipilih:
+// - belum login → localStorage di browser ini
+// - sudah login → tabel "transaksi" di Supabase
 export function useTransaksi() {
   // useState membuat data ini dipakai bersama oleh semua halaman & komponen
-  const daftar = useState<Transaksi[]>('transaksi', muatDariStorage)
+  const daftar = useState<Transaksi[]>('transaksi', () => [])
+  const memuat = useState('transaksi-memuat', () => false)
+  // Jumlah transaksi lokal yang belum dipindahkan ke akun (dipakai saat sudah login)
+  const jumlahLokal = useState('transaksi-lokal', () => 0)
 
-  function simpan() {
-    localStorage.setItem(KUNCI_STORAGE, JSON.stringify(daftar.value))
+  const supabase = useSupabase()
+  const user = useUser()
+  const online = () => !!(supabase && user.value)
+
+  async function muatUlang() {
+    const lokal = muatLokal()
+    if (!online()) {
+      daftar.value = lokal
+      jumlahLokal.value = 0
+      return
+    }
+    jumlahLokal.value = lokal.length
+    memuat.value = true
+    try {
+      const { data, error } = await supabase!.from('transaksi').select(KOLOM)
+      if (error) throw error
+      daftar.value = data
+    } catch (e) {
+      console.error(e)
+      alert('Gagal memuat data dari server.')
+    } finally {
+      memuat.value = false
+    }
   }
 
-  function tambah(data: DataTransaksi) {
-    daftar.value.push({ ...data, id: crypto.randomUUID() })
-    simpan()
+  async function tambah(data: DataTransaksi) {
+    const baru: Transaksi = { ...data, id: crypto.randomUUID() }
+    if (online()) {
+      const { error } = await supabase!.from('transaksi').insert(baru)
+      if (error) throw error
+    }
+    daftar.value.push(baru)
+    if (!online()) simpanLokal(daftar.value)
   }
 
-  function ubah(id: string, data: DataTransaksi) {
+  async function ubah(id: string, data: DataTransaksi) {
+    if (online()) {
+      const { error } = await supabase!.from('transaksi').update(data).eq('id', id)
+      if (error) throw error
+    }
     const index = daftar.value.findIndex((t) => t.id === id)
-    if (index === -1) return
-    daftar.value[index] = { ...data, id }
-    simpan()
+    if (index !== -1) daftar.value[index] = { ...data, id }
+    if (!online()) simpanLokal(daftar.value)
   }
 
-  function hapus(id: string) {
+  async function hapus(id: string) {
+    if (online()) {
+      const { error } = await supabase!.from('transaksi').delete().eq('id', id)
+      if (error) throw error
+    }
     daftar.value = daftar.value.filter((t) => t.id !== id)
-    simpan()
+    if (!online()) simpanLokal(daftar.value)
+  }
+
+  // Pindahkan transaksi dari localStorage ke akun Supabase, lalu hapus salinan lokalnya
+  async function pindahkanKeAkun() {
+    if (!online()) return
+    const { error } = await supabase!.from('transaksi').upsert(muatLokal(), { onConflict: 'id' })
+    if (error) throw error
+    simpanLokal([])
+    await muatUlang()
   }
 
   // Urutkan dari tanggal terbaru
@@ -57,7 +111,7 @@ export function useTransaksi() {
     [...daftar.value].sort((a, b) => b.tanggal.localeCompare(a.tanggal)),
   )
 
-  return { daftar, terurut, tambah, ubah, hapus }
+  return { daftar, terurut, memuat, jumlahLokal, muatUlang, tambah, ubah, hapus, pindahkanKeAkun }
 }
 
 // Hitung total pemasukan, pengeluaran, dan saldo dari daftar transaksi
