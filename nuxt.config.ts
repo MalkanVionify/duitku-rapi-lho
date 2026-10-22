@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Keuangan keluarga, rapi bersama. Catat pemasukan dan pengeluaran dengan mudah.' },
-        { name: 'theme-color', content: '#0f766e' },
+        { name: 'theme-color', content: '#587a34' },
         { property: 'og:title', content: 'Duitku Rapi Lho' },
         { property: 'og:description', content: 'Keuangan keluarga, rapi bersama.' },
         { property: 'og:image', content: '/icon-512.png' },

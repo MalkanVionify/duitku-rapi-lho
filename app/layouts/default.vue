@@ -80,13 +80,15 @@ async function pindahkan() {
 </template>
 
 <style scoped>
-.header { background: var(--kartu); border-bottom: 1px solid var(--garis); position: sticky; top: 0; z-index: 10; }
+.header { background: var(--kartu); position: sticky; top: 0; z-index: 10; }
+.header::after { content: ''; display: block; height: 3px; background: linear-gradient(90deg, var(--utama), var(--aksen)); }
 .header-isi { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; flex-wrap: wrap; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--teks); text-decoration: none; }
 .logo-ikon { width: 34px; height: 34px; }
 .nav { display: flex; gap: 4px; }
 .nav a { padding: 6px 12px; border-radius: 8px; color: var(--teks-redup); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-.nav a.router-link-exact-active { background: var(--utama-muda); color: var(--utama); }
+.nav a:hover { color: var(--aksen-tua); }
+.nav a.router-link-exact-active { background: var(--aksen-muda); color: var(--aksen-tua); }
 .akun { display: flex; align-items: center; gap: 8px; }
 .foto { width: 30px; height: 30px; border-radius: 50%; }
 .nama { font-size: 0.9rem; font-weight: 600; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

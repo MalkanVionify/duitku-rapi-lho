@@ -1,30 +1,41 @@
+/* Palet "pink matcha": matcha sebagai warna utama, pink sebagai aksen */
 :root {
-  --latar: #f4f6f8;
+  --latar: #fbf5f3;
   --kartu: #ffffff;
-  --teks: #1f2933;
-  --teks-redup: #6b7280;
-  --garis: #e5e7eb;
-  --utama: #0f766e;
-  --utama-muda: #ccfbf1;
-  --hijau: #15803d;
-  --hijau-muda: #dcfce7;
-  --merah: #dc2626;
-  --merah-muda: #fee2e2;
+  --teks: #2a2d26;
+  --teks-redup: #6b6467;
+  --garis: #f0e2e5;
+  --utama: #587a34;
+  --utama-tua: #3f5c23;
+  --utama-muda: #e9f1dc;
+  --utama-teks: #ffffff;
+  --aksen: #f4a9c0;
+  --aksen-tua: #b03f66;
+  --aksen-muda: #fde4ec;
+  --hijau: #4a7a12;
+  --hijau-muda: #ecf5dc;
+  --merah: #c73a62;
+  --merah-muda: #fde4ec;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --latar: #111827;
-    --kartu: #1f2937;
-    --teks: #f3f4f6;
-    --teks-redup: #9ca3af;
-    --garis: #374151;
-    --utama: #14b8a6;
-    --utama-muda: #134e4a;
-    --hijau: #4ade80;
-    --hijau-muda: #14532d;
-    --merah: #f87171;
-    --merah-muda: #7f1d1d;
+    --latar: #141913;
+    --kartu: #1e251c;
+    --teks: #f4efea;
+    --teks-redup: #a9a39b;
+    --garis: #323d2d;
+    --utama: #a6c77c;
+    --utama-tua: #7fa356;
+    --utama-muda: #2c3a21;
+    --utama-teks: #182310;
+    --aksen: #f4a9c0;
+    --aksen-tua: #f4a9c0;
+    --aksen-muda: #46242f;
+    --hijau: #a8dc7a;
+    --hijau-muda: #24361a;
+    --merah: #f794b0;
+    --merah-muda: #46242f;
   }
 }
 
@@ -33,10 +44,17 @@
 body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background: var(--latar);
+  background:
+    radial-gradient(circle at 100% 0, var(--aksen-muda), transparent 420px),
+    radial-gradient(circle at 0 100%, var(--utama-muda), transparent 460px),
+    var(--latar);
+  background-attachment: fixed;
   color: var(--teks);
   line-height: 1.5;
+  min-height: 100vh;
 }
+
+a { color: var(--aksen-tua); }
 
 .wadah { max-width: 960px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
 
@@ -62,7 +80,7 @@ input, select {
   color: var(--teks);
   width: 100%;
 }
-input:focus, select:focus { outline: 2px solid var(--utama); border-color: transparent; }
+input:focus, select:focus { outline: 2px solid var(--aksen); border-color: transparent; }
 
 .tombol {
   font: inherit;
@@ -74,7 +92,7 @@ input:focus, select:focus { outline: 2px solid var(--utama); border-color: trans
   color: var(--teks);
   cursor: pointer;
 }
-.tombol.utama { background: var(--utama); border-color: var(--utama); color: #fff; }
+.tombol.utama { background: var(--utama); border-color: var(--utama); color: var(--utama-teks); }
 .tombol:hover { filter: brightness(0.95); }
 
 .kosong { color: var(--teks-redup); text-align: center; padding: 24px 0; margin: 0; }

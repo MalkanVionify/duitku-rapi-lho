@@ -24,8 +24,16 @@ defineProps<{ pemasukan: number; pengeluaran: number; saldo: number }>()
 .ringkasan .kartu { display: flex; flex-direction: column; gap: 4px; }
 .ringkasan small { color: var(--teks-redup); }
 .ringkasan strong { font-size: 1.15rem; }
-.saldo { grid-column: 1 / -1; background: var(--utama); color: #fff; border: none; }
-.saldo small { color: rgba(255, 255, 255, 0.8); }
+.saldo {
+  grid-column: 1 / -1; color: var(--utama-teks); border: none; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--utama), var(--utama-tua));
+}
+/* Hiasan lingkaran pink di pojok kartu (solid, supaya tidak bercampur jadi cokelat dengan hijau) */
+.saldo::before, .saldo::after { content: ''; position: absolute; border-radius: 50%; background: var(--aksen); }
+.saldo::after { right: -36px; top: -36px; width: 120px; height: 120px; }
+.saldo::before { right: 92px; bottom: -22px; width: 48px; height: 48px; background: #fde4ec; }
+.saldo > * { position: relative; z-index: 1; }
+.saldo small { color: inherit; opacity: 0.85; }
 .saldo strong { font-size: 1.8rem; }
 .masuk { color: var(--hijau); }
 .keluar { color: var(--merah); }
