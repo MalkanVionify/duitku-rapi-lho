@@ -24,9 +24,16 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'id' },
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Aplikasi pencatatan keuangan pribadi yang simpel dan rapi.' },
+        { name: 'description', content: 'Keuangan keluarga, rapi bersama. Catat pemasukan dan pengeluaran dengan mudah.' },
+        { name: 'theme-color', content: '#0f766e' },
+        { property: 'og:title', content: 'Duitku Rapi Lho' },
+        { property: 'og:description', content: 'Keuangan keluarga, rapi bersama.' },
+        { property: 'og:image', content: '/icon-512.png' },
       ],
-      link: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
+      link: [
+        { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
     },
   },
 })

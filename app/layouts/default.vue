@@ -26,7 +26,7 @@ async function pindahkan() {
     <header class="header">
       <div class="wadah header-isi">
         <NuxtLink to="/" class="logo">
-          <span class="logo-ikon">Rp</span>
+          <img src="/logo.svg" alt="" class="logo-ikon">
           Duitku Rapi Lho
         </NuxtLink>
         <nav class="nav">
@@ -81,10 +81,7 @@ async function pindahkan() {
 .header { background: var(--kartu); border-bottom: 1px solid var(--garis); position: sticky; top: 0; z-index: 10; }
 .header-isi { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; flex-wrap: wrap; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--teks); text-decoration: none; }
-.logo-ikon {
-  width: 32px; height: 32px; border-radius: 8px; background: var(--utama); color: #fff;
-  display: grid; place-items: center; font-size: 0.8rem;
-}
+.logo-ikon { width: 34px; height: 34px; }
 .nav { display: flex; gap: 4px; }
 .nav a { padding: 6px 12px; border-radius: 8px; color: var(--teks-redup); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
 .nav a.router-link-exact-active { background: var(--utama-muda); color: var(--utama); }

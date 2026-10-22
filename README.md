@@ -1,8 +1,10 @@
-# Duitku Rapi Lho 💸
+<p align="center"><img src="public/logo-lengkap.svg" alt="Duitku Rapi Lho" width="360"></p>
 
-Aplikasi pencatatan keuangan pribadi, dibuat dengan Nuxt dan di-deploy di Vercel.
+# Duitku Rapi Lho
 
-🔗 **Demo:** https://GANTI-DENGAN-ALAMAT-VERCEL-KAMU.vercel.app
+Keuangan keluarga, rapi bersama. Aplikasi pencatatan keuangan dengan Nuxt, Supabase, dan Vercel.
+
+🔗 **Demo:** https://duitku-rapi-lho.vercel.app
 
 ## Fitur
 
