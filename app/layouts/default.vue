@@ -73,6 +73,8 @@ async function pindahkan() {
     <footer class="wadah footer">
       Duitku Rapi Lho © {{ new Date().getFullYear() }} · Dibuat dengan Nuxt
       <span v-if="tersedia"> · {{ user ? 'Data tersimpan di akunmu' : 'Data tersimpan di browser ini' }}</span>
+      <br>
+      <NuxtLink to="/privasi">Kebijakan Privasi</NuxtLink> · <NuxtLink to="/ketentuan">Ketentuan Layanan</NuxtLink>
     </footer>
   </div>
 </template>
@@ -97,5 +99,6 @@ async function pindahkan() {
 .banner-aksi { display: flex; gap: 8px; }
 .konten { padding-top: 24px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 20px; }
 .footer { color: var(--teks-redup); font-size: 0.85rem; text-align: center; padding-bottom: 24px; }
+.footer a { color: inherit; }
 @media (max-width: 520px) { .nama { display: none; } }
 </style>
