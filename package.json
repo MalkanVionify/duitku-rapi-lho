@@ -1,0 +1,19 @@
+{
+  "name": "duitku-rapi-lho",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1",
+    "exceljs": "^4.4.0",
+    "nuxt": "^4.0.0",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
+}
