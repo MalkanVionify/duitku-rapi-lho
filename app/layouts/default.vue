@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { user, loginGoogle, logout, tersedia } = useAuth()
 const { jumlahLokal, pindahkanKeAkun } = useTransaksi()
+const { tema, gantiTema } = useTema()
+const labelTema = computed(() => (tema.value === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'))
 
 const namaUser = computed(() => user.value?.user_metadata.full_name ?? user.value?.email ?? '')
 const fotoUser = computed(() => user.value?.user_metadata.avatar_url as string | undefined)
@@ -34,21 +36,33 @@ async function pindahkan() {
           <NuxtLink to="/transaksi">Transaksi</NuxtLink>
           <NuxtLink to="/tentang">Tentang</NuxtLink>
         </nav>
-        <div v-if="tersedia" class="akun">
-          <template v-if="user">
-            <img v-if="fotoUser" :src="fotoUser" :alt="namaUser" class="foto" referrerpolicy="no-referrer">
-            <span class="nama">{{ namaUser }}</span>
-            <button class="tombol kecil" @click="logout">Keluar</button>
-          </template>
-          <button v-else class="tombol kecil tombol-google" @click="loginGoogle">
-            <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z" />
-              <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 6.9-10.3 6.9-17.7z" />
-              <path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z" />
-              <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.7-6c-2.2 1.5-5 2.3-8.2 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z" />
+        <div class="kanan">
+          <button class="tombol-tema" :aria-label="labelTema" :title="labelTema" @click="gantiTema">
+            <!-- Matahari saat gelap (klik → terang), bulan saat terang (klik → gelap) -->
+            <svg v-if="tema === 'dark'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
             </svg>
-            Masuk dengan Google
+            <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
           </button>
+          <div v-if="tersedia" class="akun">
+            <template v-if="user">
+              <img v-if="fotoUser" :src="fotoUser" :alt="namaUser" class="foto" referrerpolicy="no-referrer">
+              <span class="nama">{{ namaUser }}</span>
+              <button class="tombol kecil" @click="logout">Keluar</button>
+            </template>
+            <button v-else class="tombol kecil tombol-google" @click="loginGoogle">
+              <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+                <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z" />
+                <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 6.9-10.3 6.9-17.7z" />
+                <path fill="#FBBC05" d="M10.6 28.6c-.5-1.4-.8-3-.8-4.6s.3-3.2.8-4.6l-7.9-6.1C1 16.6 0 20.2 0 24s1 7.4 2.7 10.7l7.9-6.1z" />
+                <path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.7-6c-2.2 1.5-5 2.3-8.2 2.3-6.2 0-11.5-4.1-13.4-9.8l-7.9 6.1C6.6 42.6 14.6 48 24 48z" />
+              </svg>
+              Masuk dengan Google
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -81,14 +95,20 @@ async function pindahkan() {
 
 <style scoped>
 .header { background: var(--kartu); position: sticky; top: 0; z-index: 10; }
-.header::after { content: ''; display: block; height: 3px; background: linear-gradient(90deg, var(--utama), var(--aksen)); }
+.header::after { content: ''; display: block; height: 3px; background: linear-gradient(90deg, var(--hiasan-b), var(--hiasan-a)); }
 .header-isi { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; padding-bottom: 12px; flex-wrap: wrap; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; color: var(--teks); text-decoration: none; }
 .logo-ikon { width: 34px; height: 34px; }
 .nav { display: flex; gap: 4px; }
 .nav a { padding: 6px 12px; border-radius: 8px; color: var(--teks-redup); text-decoration: none; font-weight: 600; font-size: 0.95rem; }
-.nav a:hover { color: var(--aksen-tua); }
-.nav a.router-link-exact-active { background: var(--aksen-muda); color: var(--aksen-tua); }
+.nav a:hover { color: var(--sorot); }
+.nav a.router-link-exact-active { background: var(--sorot-muda); color: var(--sorot); }
+.kanan { display: flex; align-items: center; gap: 10px; }
+.tombol-tema {
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--garis);
+  background: var(--kartu); color: var(--sorot); display: grid; place-items: center; cursor: pointer;
+}
+.tombol-tema:hover { background: var(--sorot-muda); }
 .akun { display: flex; align-items: center; gap: 8px; }
 .foto { width: 30px; height: 30px; border-radius: 50%; }
 .nama { font-size: 0.9rem; font-weight: 600; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -102,5 +122,7 @@ async function pindahkan() {
 .konten { padding-top: 24px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 20px; }
 .footer { color: var(--teks-redup); font-size: 0.85rem; text-align: center; padding-bottom: 24px; }
 .footer a { color: inherit; }
+/* Di layar sempit: logo + tombol tema + akun di baris atas, menu di baris kedua */
+@media (max-width: 640px) { .nav { order: 3; width: 100%; } }
 @media (max-width: 520px) { .nama { display: none; } }
 </style>

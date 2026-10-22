@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Keuangan keluarga, rapi bersama. Catat pemasukan dan pengeluaran dengan mudah.' },
-        { name: 'theme-color', content: '#587a34' },
+        { name: 'theme-color', content: '#2563eb' },
         { property: 'og:title', content: 'Duitku Rapi Lho' },
         { property: 'og:description', content: 'Keuangan keluarga, rapi bersama.' },
         { property: 'og:image', content: '/icon-512.png' },
@@ -33,6 +33,17 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
+      // Pasang tema (pilihan tersimpan, atau ikut pengaturan perangkat) sebelum halaman tampil
+      script: [
+        {
+          tagPosition: 'head',
+          innerHTML: `(function () {
+  var t; try { t = localStorage.getItem('duitku-rapi-lho:tema') } catch (e) {}
+  if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+})()`,
+        },
       ],
     },
   },

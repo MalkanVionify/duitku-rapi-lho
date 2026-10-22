@@ -1,42 +1,54 @@
-/* Palet "pink matcha": matcha sebagai warna utama, pink sebagai aksen */
+/*
+  Tema dipilih lewat atribut data-theme di <html> (diset script di nuxt.config sebelum halaman tampil).
+  - Terang: pink cerah + biru
+  - Gelap: hitam + hijau tosca + sedikit biru
+*/
 :root {
-  --latar: #fbf5f3;
+  --latar: #fff7fb;
   --kartu: #ffffff;
-  --teks: #2a2d26;
-  --teks-redup: #6b6467;
-  --garis: #f0e2e5;
-  --utama: #587a34;
-  --utama-tua: #3f5c23;
-  --utama-muda: #e9f1dc;
+  --teks: #1c2340;
+  --teks-redup: #5d6278;
+  --garis: #f7d9e8;
+  --utama: #2563eb;          /* tombol, link, merek */
+  --utama-muda: #dbeafe;
   --utama-teks: #ffffff;
-  --aksen: #f4a9c0;
-  --aksen-tua: #b03f66;
-  --aksen-muda: #fde4ec;
-  --hijau: #4a7a12;
-  --hijau-muda: #ecf5dc;
-  --merah: #c73a62;
-  --merah-muda: #fde4ec;
+  --sorot: #c2185b;          /* menu aktif & teks yang disorot */
+  --sorot-muda: #ffe0ef;
+  --hiasan-a: #ff5fa2;       /* warna dekorasi */
+  --hiasan-b: #3b82f6;
+  --cahaya-a: #ffd6ea;       /* semburat di latar */
+  --cahaya-b: #dbeafe;
+  --saldo-dari: #2563eb;
+  --saldo-ke: #e0368a;
+  --hijau: #15803d;
+  --hijau-muda: #dcfce7;
+  --merah: #d6246e;
+  --merah-muda: #ffe0ef;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --latar: #141913;
-    --kartu: #1e251c;
-    --teks: #f4efea;
-    --teks-redup: #a9a39b;
-    --garis: #323d2d;
-    --utama: #a6c77c;
-    --utama-tua: #7fa356;
-    --utama-muda: #2c3a21;
-    --utama-teks: #182310;
-    --aksen: #f4a9c0;
-    --aksen-tua: #f4a9c0;
-    --aksen-muda: #46242f;
-    --hijau: #a8dc7a;
-    --hijau-muda: #24361a;
-    --merah: #f794b0;
-    --merah-muda: #46242f;
-  }
+:root[data-theme='dark'] {
+  --latar: #090c0e;
+  --kartu: #12181b;
+  --teks: #e6f0f1;
+  --teks-redup: #8fa1a6;
+  --garis: #23302f;
+  --utama: #2dd4bf;
+  --utama-muda: #0e2f2c;
+  --utama-teks: #032420;
+  --sorot: #2dd4bf;
+  --sorot-muda: #0e2f2c;
+  --hiasan-a: #2dd4bf;
+  --hiasan-b: #3b82f6;
+  --cahaya-a: #0b2a28;
+  --cahaya-b: #0c1a33;
+  --saldo-dari: #0f766e;
+  --saldo-ke: #1d4ed8;
+  --hijau: #4ade80;
+  --hijau-muda: #10301d;
+  --merah: #fb7185;
+  --merah-muda: #3a1622;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -45,8 +57,8 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   background:
-    radial-gradient(circle at 100% 0, var(--aksen-muda), transparent 420px),
-    radial-gradient(circle at 0 100%, var(--utama-muda), transparent 460px),
+    radial-gradient(circle at 100% 0, var(--cahaya-a), transparent 420px),
+    radial-gradient(circle at 0 100%, var(--cahaya-b), transparent 460px),
     var(--latar);
   background-attachment: fixed;
   color: var(--teks);
@@ -54,7 +66,7 @@ body {
   min-height: 100vh;
 }
 
-a { color: var(--aksen-tua); }
+a { color: var(--utama); }
 
 .wadah { max-width: 960px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
 
@@ -80,7 +92,7 @@ input, select {
   color: var(--teks);
   width: 100%;
 }
-input:focus, select:focus { outline: 2px solid var(--aksen); border-color: transparent; }
+input:focus, select:focus { outline: 2px solid var(--hiasan-a); border-color: transparent; }
 
 .tombol {
   font: inherit;

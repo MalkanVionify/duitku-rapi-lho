@@ -67,11 +67,11 @@ const perKategori = computed(() => {
 .sapaan { font-size: 1.3rem; margin: 0 0 12px; }
 .grid { display: grid; gap: 20px; }
 @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
-.judul-bagian a { color: var(--aksen-tua); font-size: 0.9rem; text-decoration: none; }
-.kosong a { color: var(--aksen-tua); }
+.judul-bagian a { color: var(--sorot); font-size: 0.9rem; text-decoration: none; }
+.kosong a { color: var(--sorot); }
 .batang li { margin-bottom: 12px; }
 .batang-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px; }
 .batang-label small { color: var(--teks-redup); }
 .batang-latar { height: 8px; border-radius: 99px; background: var(--latar); overflow: hidden; }
-.batang-isi { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--aksen), var(--merah)); }
+.batang-isi { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--hiasan-b), var(--hiasan-a)); }
 </style>
