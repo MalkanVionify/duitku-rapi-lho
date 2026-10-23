@@ -19,6 +19,7 @@ useHead({ title: 'Tentang · Duitku Rapi Lho' })
       <li>Ketik Cepat: tulis "bakso 15rb kemarin", langsung tercatat</li>
       <li>Heatmap kalender pemasukan &amp; pengeluaran</li>
       <li>Duitku Wrapped: rekap bulanan &amp; tahunan ala stories</li>
+      <li>Target bulanan, dana rutin dengan pengingat jatuh tempo, dan proyeksi ke depan</li>
       <li>Data tersimpan di browser (localStorage), tanpa perlu login</li>
     </ul>
 

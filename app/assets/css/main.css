@@ -24,6 +24,8 @@
   --hijau-muda: #dcfce7;
   --merah: #d6246e;
   --merah-muda: #ffe0ef;
+  --kuning: #b45309;
+  --kuning-muda: #fef3c7;
   color-scheme: light;
 }
 
@@ -48,6 +50,8 @@
   --hijau-muda: #10301d;
   --merah: #fb7185;
   --merah-muda: #3a1622;
+  --kuning: #fbbf24;
+  --kuning-muda: #3a2a0a;
   color-scheme: dark;
 }
 

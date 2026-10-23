@@ -41,11 +41,15 @@ async function pindahkan() {
             <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 4 3.5 7.5M7 4l3.5 3.5M17 20V4m0 16-3.5-3.5M17 20l3.5-3.5" /></svg>
             Transaksi
           </NuxtLink>
+          <NuxtLink to="/target">
+            <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="5" /><circle cx="12" cy="12" r="1" /></svg>
+            Target
+          </NuxtLink>
           <NuxtLink to="/wrapped">
             <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.2 5.3L20 9l-4.4 3.8L17 18.5 12 15.6 7 18.5l1.4-5.7L4 9l5.8-.7z" /></svg>
             <span><span class="awalan">Duitku </span>Wrapped</span>
           </NuxtLink>
-          <NuxtLink to="/tentang">
+          <NuxtLink to="/tentang" class="nav-tentang">
             <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 7.5v.5" /></svg>
             Tentang
           </NuxtLink>
@@ -103,7 +107,7 @@ async function pindahkan() {
       Duitku Rapi Lho © {{ new Date().getFullYear() }} · Dibuat dengan Nuxt
       <span v-if="tersedia"> · {{ user ? 'Data tersimpan di akunmu' : 'Data tersimpan di browser ini' }}</span>
       <br>
-      <NuxtLink to="/privasi">Kebijakan Privasi</NuxtLink> · <NuxtLink to="/ketentuan">Ketentuan Layanan</NuxtLink>
+      <NuxtLink to="/tentang">Tentang</NuxtLink> · <NuxtLink to="/privasi">Kebijakan Privasi</NuxtLink> · <NuxtLink to="/ketentuan">Ketentuan Layanan</NuxtLink>
     </footer>
   </div>
 </template>
@@ -145,6 +149,8 @@ async function pindahkan() {
 @media (max-width: 440px) {
   .nav a { padding: 6px 10px; }
   .awalan { display: none; }
+  /* Menu HP sudah penuh: "Tentang" cukup lewat link di footer */
+  .nav a.nav-tentang { display: none; }
 }
 @media (max-width: 520px) { .nama { display: none; } }
 

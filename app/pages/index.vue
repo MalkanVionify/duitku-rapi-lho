@@ -25,28 +25,35 @@ const perKategori = computed(() => {
 
 <template>
   <section>
-    <h1 class="sapaan">Ringkasan {{ formatBulan(bulan) }}</h1>
+    <div class="kepala">
+      <h1 class="sapaan">Ringkasan {{ formatBulan(bulan) }}</h1>
+      <JamLive />
+    </div>
     <KartuRingkasan v-bind="ringkasan" />
   </section>
 
   <div class="grid">
-    <section class="kartu">
-      <div class="judul-bagian">
-        <h2>Pengeluaran per Kategori</h2>
-      </div>
-      <p v-if="perKategori.length === 0" class="kosong">Belum ada pengeluaran bulan ini.</p>
-      <ul v-else class="daftar batang">
-        <li v-for="k in perKategori" :key="k.kategori">
-          <div class="batang-label">
-            <span>{{ k.kategori }} <small>({{ k.persen }}%)</small></span>
-            <strong>{{ formatRupiah(k.nominal) }}</strong>
-          </div>
-          <div class="batang-latar">
-            <div class="batang-isi" :style="{ width: `${k.lebar}%` }" />
-          </div>
-        </li>
-      </ul>
-    </section>
+    <div class="kolom">
+      <section class="kartu">
+        <div class="judul-bagian">
+          <h2>Pengeluaran per Kategori</h2>
+        </div>
+        <p v-if="perKategori.length === 0" class="kosong">Belum ada pengeluaran bulan ini.</p>
+        <ul v-else class="daftar batang">
+          <li v-for="k in perKategori" :key="k.kategori">
+            <div class="batang-label">
+              <span>{{ k.kategori }} <small>({{ k.persen }}%)</small></span>
+              <strong>{{ formatRupiah(k.nominal) }}</strong>
+            </div>
+            <div class="batang-latar">
+              <div class="batang-isi" :style="{ width: `${k.lebar}%` }" />
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <RencanaRingkas />
+    </div>
 
     <div class="kolom">
       <section class="kartu">
@@ -72,7 +79,8 @@ const perKategori = computed(() => {
 </template>
 
 <style scoped>
-.sapaan { font-size: 1.3rem; margin: 0 0 12px; }
+.kepala { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; margin-bottom: 12px; }
+.sapaan { font-size: 1.3rem; margin: 0; }
 .grid { display: grid; gap: 20px; }
 @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
 .kolom { display: flex; flex-direction: column; gap: 12px; }

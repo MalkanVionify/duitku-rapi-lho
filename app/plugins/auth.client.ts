@@ -4,6 +4,7 @@ export default defineNuxtPlugin(async () => {
   const supabase = useSupabase()
   const user = useUser()
   const { muatUlang } = useTransaksi()
+  const { muatUlang: muatRencana } = useRencana()
 
   if (supabase) {
     // Kalau baru kembali dari halaman login Google, sesi dibuat dari ?code= di URL
@@ -22,5 +23,5 @@ export default defineNuxtPlugin(async () => {
   }
 
   // Muat ulang data setiap kali user login / logout
-  watch(() => user.value?.id, muatUlang, { immediate: true })
+  watch(() => user.value?.id, () => Promise.all([muatUlang(), muatRencana()]), { immediate: true })
 })
