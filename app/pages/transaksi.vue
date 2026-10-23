@@ -92,7 +92,10 @@ async function export_() {
 
 <template>
   <div class="tata-letak">
-    <TransaksiForm :edit="sedangDiedit" @simpan="simpan" @batal="sedangDiedit = null" />
+    <div class="kolom-kiri">
+      <KetikCepat v-if="!sedangDiedit" />
+      <TransaksiForm :edit="sedangDiedit" @simpan="simpan" @batal="sedangDiedit = null" />
+    </div>
 
     <section class="kartu">
       <div class="judul-bagian">
@@ -151,9 +154,10 @@ async function export_() {
 
 <style scoped>
 .tata-letak { display: grid; gap: 20px; }
+.kolom-kiri { display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 820px) {
   .tata-letak { grid-template-columns: 340px 1fr; align-items: start; }
-  .tata-letak > form { position: sticky; top: 84px; }
+  .kolom-kiri { position: sticky; top: 84px; }
 }
 .jumlah { color: var(--teks-redup); }
 .tombol-excel { background: #1d6f42; border-color: #1d6f42; color: #fff; padding: 8px 14px; font-size: 0.9rem; }

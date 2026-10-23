@@ -16,6 +16,9 @@ useHead({ title: 'Tentang · Duitku Rapi Lho' })
       <li>Ringkasan saldo, pemasukan, dan pengeluaran bulan ini</li>
       <li>Grafik pengeluaran per kategori</li>
       <li>Filter transaksi per bulan, jenis, dan kategori</li>
+      <li>Ketik Cepat: tulis "bakso 15rb kemarin", langsung tercatat</li>
+      <li>Heatmap kalender pemasukan &amp; pengeluaran</li>
+      <li>Duitku Wrapped: rekap bulanan &amp; tahunan ala stories</li>
       <li>Data tersimpan di browser (localStorage), tanpa perlu login</li>
     </ul>
 

@@ -34,6 +34,7 @@ async function pindahkan() {
         <nav class="nav">
           <NuxtLink to="/">Dashboard</NuxtLink>
           <NuxtLink to="/transaksi">Transaksi</NuxtLink>
+          <NuxtLink to="/wrapped"><span class="awalan">Duitku </span>Wrapped</NuxtLink>
           <NuxtLink to="/tentang">Tentang</NuxtLink>
         </nav>
         <div class="kanan">
@@ -123,6 +124,13 @@ async function pindahkan() {
 .footer { color: var(--teks-redup); font-size: 0.85rem; text-align: center; padding-bottom: 24px; }
 .footer a { color: inherit; }
 /* Di layar sempit: logo + tombol tema + akun di baris atas, menu di baris kedua */
-@media (max-width: 640px) { .nav { order: 3; width: 100%; } }
+@media (max-width: 640px) {
+  .nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .nav a { white-space: nowrap; }
+}
+@media (max-width: 440px) {
+  .nav a { padding: 6px 10px; }
+  .awalan { display: none; }
+}
 @media (max-width: 520px) { .nama { display: none; } }
 </style>

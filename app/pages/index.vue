@@ -9,6 +9,7 @@ const bulan = bulanIni()
 const transaksiBulanIni = computed(() => terurut.value.filter((t) => t.tanggal.startsWith(bulan)))
 const ringkasan = computed(() => hitungRingkasan(transaksiBulanIni.value))
 const terbaru = computed(() => terurut.value.slice(0, 5))
+const tampilHeatmap = ref(false)
 
 // Pengeluaran bulan ini per kategori, lengkap dengan persen & lebar batang
 const perKategori = computed(() => {
@@ -47,19 +48,26 @@ const perKategori = computed(() => {
       </ul>
     </section>
 
-    <section class="kartu">
-      <div class="judul-bagian">
-        <h2>Transaksi Terbaru</h2>
-        <NuxtLink to="/transaksi">Lihat semua →</NuxtLink>
-      </div>
-      <p v-if="terbaru.length === 0" class="kosong">
-        Belum ada transaksi.<br>
-        <NuxtLink to="/transaksi">Tambah transaksi pertamamu</NuxtLink>
-      </p>
-      <ul v-else class="daftar">
-        <TransaksiItem v-for="t in terbaru" :key="t.id" :transaksi="t" />
-      </ul>
-    </section>
+    <div class="kolom">
+      <section class="kartu">
+        <div class="judul-bagian">
+          <h2>Transaksi Terbaru</h2>
+          <NuxtLink to="/transaksi">Lihat semua →</NuxtLink>
+        </div>
+        <p v-if="terbaru.length === 0" class="kosong">
+          Belum ada transaksi.<br>
+          <NuxtLink to="/transaksi">Tambah transaksi pertamamu</NuxtLink>
+        </p>
+        <ul v-else class="daftar">
+          <TransaksiItem v-for="t in terbaru" :key="t.id" :transaksi="t" />
+        </ul>
+      </section>
+
+      <button type="button" class="tombol tombol-heatmap" :aria-expanded="tampilHeatmap" @click="tampilHeatmap = !tampilHeatmap">
+        🗓️ {{ tampilHeatmap ? 'Sembunyikan Heatmap' : 'Lihat Heatmap Pemasukan/Pengeluaran' }}
+      </button>
+      <HeatmapBulan v-if="tampilHeatmap" :transaksi="terurut" :bulan-awal="bulan" />
+    </div>
   </div>
 </template>
 
@@ -67,6 +75,9 @@ const perKategori = computed(() => {
 .sapaan { font-size: 1.3rem; margin: 0 0 12px; }
 .grid { display: grid; gap: 20px; }
 @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+.kolom { display: flex; flex-direction: column; gap: 12px; }
+.tombol-heatmap { border-style: dashed; color: var(--sorot); }
+.tombol-heatmap:hover { background: var(--sorot-muda); filter: none; }
 .judul-bagian a { color: var(--sorot); font-size: 0.9rem; text-decoration: none; }
 .kosong a { color: var(--sorot); }
 .batang li { margin-bottom: 12px; }
