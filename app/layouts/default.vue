@@ -32,10 +32,23 @@ async function pindahkan() {
           Duitku Rapi Lho
         </NuxtLink>
         <nav class="nav">
-          <NuxtLink to="/">Dashboard</NuxtLink>
-          <NuxtLink to="/transaksi">Transaksi</NuxtLink>
-          <NuxtLink to="/wrapped"><span class="awalan">Duitku </span>Wrapped</NuxtLink>
-          <NuxtLink to="/tentang">Tentang</NuxtLink>
+          <!-- Ikon hanya tampil di sidebar desktop -->
+          <NuxtLink to="/">
+            <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5" /><rect x="14" y="3" width="7" height="5" rx="1.5" /><rect x="14" y="12" width="7" height="9" rx="1.5" /><rect x="3" y="16" width="7" height="5" rx="1.5" /></svg>
+            Dashboard
+          </NuxtLink>
+          <NuxtLink to="/transaksi">
+            <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16M7 4 3.5 7.5M7 4l3.5 3.5M17 20V4m0 16-3.5-3.5M17 20l3.5-3.5" /></svg>
+            Transaksi
+          </NuxtLink>
+          <NuxtLink to="/wrapped">
+            <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.2 5.3L20 9l-4.4 3.8L17 18.5 12 15.6 7 18.5l1.4-5.7L4 9l5.8-.7z" /></svg>
+            <span><span class="awalan">Duitku </span>Wrapped</span>
+          </NuxtLink>
+          <NuxtLink to="/tentang">
+            <svg class="ikon-nav" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 7.5v.5" /></svg>
+            Tentang
+          </NuxtLink>
         </nav>
         <div class="kanan">
           <button class="tombol-tema" :aria-label="labelTema" :title="labelTema" @click="gantiTema">
@@ -47,8 +60,9 @@ async function pindahkan() {
             <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
             </svg>
+            <span class="label-tema">{{ tema === 'dark' ? 'Mode terang' : 'Mode gelap' }}</span>
           </button>
-          <div v-if="tersedia" class="akun">
+          <div v-if="tersedia" class="akun" :class="{ masuk: user }">
             <template v-if="user">
               <img v-if="fotoUser" :src="fotoUser" :alt="namaUser" class="foto" referrerpolicy="no-referrer">
               <span class="nama">{{ namaUser }}</span>
@@ -133,4 +147,35 @@ async function pindahkan() {
   .awalan { display: none; }
 }
 @media (max-width: 520px) { .nama { display: none; } }
+
+.ikon-nav, .label-tema { display: none; }
+
+/* Desktop: header berubah jadi sidebar di kiri, konten melebar mengisi layar */
+@media (min-width: 1024px) {
+  .halaman { display: grid; grid-template-columns: 248px minmax(0, 1fr); grid-template-rows: 1fr auto; min-height: 100vh; }
+  .header { grid-column: 1; grid-row: 1 / span 2; height: 100vh; border-right: 1px solid var(--garis); }
+  .header::after { position: absolute; top: 0; right: -2px; width: 3px; height: 100%; background: linear-gradient(180deg, var(--hiasan-b), var(--hiasan-a)); }
+  .header-isi {
+    max-width: none; height: 100%; padding: 24px 16px;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; flex-wrap: nowrap; gap: 28px;
+  }
+  .logo { padding: 0 8px; font-size: 1.05rem; }
+  .logo-ikon { width: 38px; height: 38px; }
+  .nav { flex-direction: column; gap: 4px; }
+  .nav a { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; }
+  .ikon-nav { display: block; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .kanan { margin-top: auto; flex-direction: column; align-items: stretch; gap: 10px; }
+  .tombol-tema {
+    width: 100%; height: auto; border-radius: 10px; padding: 9px 12px;
+    display: flex; align-items: center; gap: 12px; font: inherit; font-weight: 600; font-size: 0.9rem;
+  }
+  .label-tema { display: inline; color: var(--teks-redup); }
+  .akun { flex-wrap: wrap; }
+  .akun.masuk { padding: 12px; border-radius: 12px; background: var(--latar); border: 1px solid var(--garis); }
+  .akun .nama { flex: 1; max-width: none; }
+  .akun .tombol { width: 100%; }
+  .tombol-google { justify-content: center; white-space: nowrap; padding: 9px 12px; }
+  .konten, .footer { grid-column: 2; width: 100%; max-width: 1680px; margin: 0; padding-left: 40px; padding-right: 40px; }
+  .konten { padding-top: 32px; }
+}
 </style>

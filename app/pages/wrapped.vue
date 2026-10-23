@@ -33,6 +33,22 @@ const slide = computed(() => {
   ].filter(Boolean) as string[]
 })
 
+// Judul tiap slide untuk daftar slide (hanya tampil di desktop)
+function labelSlide(s: string) {
+  const label: Record<string, string> = {
+    pembuka: 'Pembuka',
+    jumlah: 'Jumlah transaksi',
+    arus: 'Uang masuk & keluar',
+    kategori: 'Kategori favorit',
+    pola: mode.value === 'bulan' ? 'Hari paling boros' : 'Bulan paling boros',
+    terbesar: 'Transaksi terbesar',
+    streak: 'Rekor mencatat',
+    persona: 'Kepribadian keuangan',
+    penutup: 'Kartu ringkasan',
+  }
+  return label[s] ?? s
+}
+
 // --- Navigasi ala stories ---
 const indeks = ref(0)
 const jeda = ref(false)
@@ -261,6 +277,15 @@ const polaMaks = computed(() => Math.max(1, ...(w.value?.pola.map((p) => p.nomin
         <button type="button" class="tombol" :disabled="terakhir" aria-label="Slide berikutnya" @click="maju">›</button>
       </div>
       <p class="petunjuk">Ketuk kanan/kiri untuk pindah · tahan untuk jeda</p>
+
+      <ol class="daftar-slide">
+        <li v-for="(s, i) in slide" :key="s">
+          <button type="button" :class="{ aktif: i === indeks, lewat: i < indeks }" @click="indeks = i">
+            <span class="nomor">{{ i + 1 }}</span>
+            {{ labelSlide(s) }}
+          </button>
+        </li>
+      </ol>
     </template>
   </section>
 </template>
@@ -401,6 +426,38 @@ const polaMaks = computed(() => Math.max(1, ...(w.value?.pola.map((p) => p.nomin
 .kendali .tombol { min-width: 48px; }
 .kendali .tombol:disabled { opacity: 0.4; cursor: not-allowed; }
 .petunjuk { text-align: center; font-size: 0.8rem; color: var(--teks-redup); margin: -6px 0 0; }
+
+.daftar-slide { display: none; }
+
+/* Desktop: panel kontrol + daftar slide di kiri, story di kanan */
+@media (min-width: 1024px) {
+  .wrapped {
+    display: grid; grid-template-columns: minmax(0, 520px) 400px; grid-template-rows: auto auto auto auto 1fr;
+    justify-content: center; column-gap: 72px; row-gap: 20px;
+  }
+  .kepala { grid-column: 1; grid-row: 1; flex-direction: column; align-items: flex-start; padding-top: 16px; }
+  .kepala h1 { font-size: 2.2rem; }
+  .kepala p { font-size: 1.05rem; }
+  .daftar-slide { grid-column: 1; grid-row: 2; display: grid; gap: 4px; list-style: none; margin: 4px 0 0; padding: 0; }
+  .kendali { grid-column: 1; grid-row: 3; justify-content: flex-start; }
+  .petunjuk { grid-column: 1; grid-row: 4; text-align: left; margin: 0; }
+  .story { grid-column: 2; grid-row: 1 / span 5; height: clamp(560px, calc(100vh - 80px), 700px); }
+  .kosong { grid-column: 1 / -1; }
+}
+.daftar-slide button {
+  width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; cursor: pointer;
+  font: inherit; font-weight: 600; font-size: 0.95rem; padding: 8px 12px; border-radius: 12px;
+  border: 1px solid transparent; background: none; color: var(--teks-redup);
+}
+.daftar-slide button:hover { background: var(--kartu); border-color: var(--garis); }
+.daftar-slide .nomor {
+  width: 26px; height: 26px; flex: none; border-radius: 50%; display: grid; place-items: center;
+  font-size: 0.8rem; border: 1px solid var(--garis); background: var(--kartu);
+}
+.daftar-slide .lewat { color: var(--teks); }
+.daftar-slide .lewat .nomor { background: var(--sorot-muda); color: var(--sorot); border-color: transparent; }
+.daftar-slide .aktif { background: var(--kartu); border-color: var(--garis); color: var(--teks); box-shadow: 0 6px 18px -12px rgba(37, 99, 235, 0.5); }
+.daftar-slide .aktif .nomor { background: linear-gradient(135deg, var(--w-biru), var(--w-pink-tua)); color: #fff; border-color: transparent; }
 
 @media (prefers-reduced-motion: reduce) {
   .bulat, .kilau, .muncul { animation: none; }

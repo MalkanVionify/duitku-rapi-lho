@@ -159,6 +159,11 @@ async function export_() {
   .tata-letak { grid-template-columns: 340px 1fr; align-items: start; }
   .kolom-kiri { position: sticky; top: 84px; }
 }
+/* Desktop dengan sidebar: tidak ada header di atas, jadi kolom kiri menempel lebih tinggi */
+@media (min-width: 1024px) {
+  .tata-letak { grid-template-columns: 380px 1fr; }
+  .kolom-kiri { top: 32px; }
+}
 .jumlah { color: var(--teks-redup); }
 .tombol-excel { background: #1d6f42; border-color: #1d6f42; color: #fff; padding: 8px 14px; font-size: 0.9rem; }
 .tombol-excel:disabled { opacity: 0.5; cursor: not-allowed; }

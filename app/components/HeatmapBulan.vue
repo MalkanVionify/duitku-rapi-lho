@@ -153,6 +153,8 @@ const hariIni_ = hariIni()
 :global([data-theme='dark']) .hari.t3, :global([data-theme='dark']) .hari.t4 { color: #090c0e; }
 .hari.hari-ini { outline: 2px solid var(--sorot); outline-offset: 1px; }
 .hari.dipilih { outline: 2px solid var(--teks); outline-offset: 1px; }
+/* Desktop: kolom lebar, jadi sel melebar dengan tinggi tetap (tidak jadi kotak raksasa) */
+@media (min-width: 1024px) { .hari { aspect-ratio: auto; height: 52px; } }
 .legenda { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 10px; font-size: 0.7rem; color: var(--teks-redup); }
 .legenda i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
 .ringkas { font-size: 0.85rem; color: var(--teks-redup); margin: 8px 0 0; }
