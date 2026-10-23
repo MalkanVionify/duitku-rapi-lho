@@ -81,8 +81,9 @@ const perKategori = computed(() => {
 <style scoped>
 .kepala { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; margin-bottom: 12px; }
 .sapaan { font-size: 1.3rem; margin: 0; }
-.grid { display: grid; gap: 20px; }
-@media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+/* minmax(0, …): kolom tidak boleh melebar melebihi layar karena teks panjang */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+@media (min-width: 720px) { .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
 .kolom { display: flex; flex-direction: column; gap: 12px; }
 .tombol-heatmap { border-style: dashed; color: var(--sorot); }
 .tombol-heatmap:hover { background: var(--sorot-muda); filter: none; }

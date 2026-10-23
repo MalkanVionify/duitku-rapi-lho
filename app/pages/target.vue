@@ -243,6 +243,8 @@ async function salinSql() {
 .judul { font-size: 1.3rem; margin: 0; }
 .sub { margin: 4px 0 0; color: var(--teks-redup); }
 .grid { display: grid; gap: 20px; }
+/* min-width: 0 supaya isi yang panjang tidak melebarkan kolom melebihi layar */
+.grid > *, .kolom > * { min-width: 0; }
 .kolom { display: flex; flex-direction: column; gap: 20px; }
 @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; align-items: start; } }
 .kartu h3 { font-size: 0.95rem; margin: 18px 0 8px; }
@@ -276,10 +278,15 @@ strong.lewat, small.lewat { color: var(--merah); }
 .minus { color: var(--merah); }
 .catatan { font-size: 0.85rem; color: var(--teks-redup); margin: 8px 0 0; }
 .catatan strong { color: var(--teks); }
-.kedepan { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.kedepan div { background: var(--latar); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; }
+.kedepan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.kedepan div { background: var(--latar); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; min-width: 0; }
 .kedepan small { color: var(--teks-redup); font-size: 0.8rem; }
-.kedepan strong { font-size: 0.95rem; }
+.kedepan strong { font-size: 0.95rem; overflow-wrap: anywhere; }
+/* HP: angka bisa sampai miliaran, jadi tampilkan sebagai daftar ke bawah */
+@media (max-width: 560px) {
+  .kedepan { grid-template-columns: 1fr; }
+  .kedepan div { flex-direction: row; justify-content: space-between; align-items: center; gap: 8px; }
+}
 
 .daftar-rutin { list-style: none; padding: 0; margin: 0; }
 .daftar-rutin li {

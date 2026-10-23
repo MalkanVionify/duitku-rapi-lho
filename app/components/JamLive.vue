@@ -30,7 +30,7 @@ const zona = computed(() =>
 
 <style scoped>
 .jam-live {
-  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 99px;
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; padding: 6px 14px; border-radius: 99px;
   background: var(--kartu); border: 1px solid var(--garis); font-size: 0.85rem; color: var(--teks-redup);
 }
 .titik { width: 8px; height: 8px; border-radius: 50%; background: var(--hiasan-a); animation: denyut 1s ease-in-out infinite; }

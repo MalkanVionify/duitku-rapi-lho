@@ -153,15 +153,15 @@ async function export_() {
 </template>
 
 <style scoped>
-.tata-letak { display: grid; gap: 20px; }
+.tata-letak { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
 .kolom-kiri { display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 820px) {
-  .tata-letak { grid-template-columns: 340px 1fr; align-items: start; }
+  .tata-letak { grid-template-columns: 340px minmax(0, 1fr); align-items: start; }
   .kolom-kiri { position: sticky; top: 84px; }
 }
 /* Desktop dengan sidebar: tidak ada header di atas, jadi kolom kiri menempel lebih tinggi */
 @media (min-width: 1024px) {
-  .tata-letak { grid-template-columns: 380px 1fr; }
+  .tata-letak { grid-template-columns: 380px minmax(0, 1fr); }
   .kolom-kiri { top: 32px; }
 }
 .jumlah { color: var(--teks-redup); }

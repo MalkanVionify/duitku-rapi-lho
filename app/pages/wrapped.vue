@@ -302,8 +302,8 @@ const polaMaks = computed(() => Math.max(1, ...(w.value?.pola.map((p) => p.nomin
 .kepala { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
 .kepala h1 { margin: 0; font-size: 1.4rem; }
 .kepala p { margin: 2px 0 0; color: var(--teks-redup); }
-.periode { display: flex; gap: 8px; align-items: center; }
-.periode input, .periode select { width: auto; }
+.periode { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.periode input, .periode select { width: auto; min-width: 0; flex: 1 1 150px; }
 .mode { display: flex; background: var(--kartu); border: 1px solid var(--garis); border-radius: 10px; padding: 3px; }
 .mode button {
   font: inherit; font-size: 0.85rem; font-weight: 600; border: none; background: none; cursor: pointer;
